@@ -1,0 +1,56 @@
+ChromaDB unavailable (ImportError: 
+
+IMPORTANT: PLEASE READ THIS FOR ADVICE ON HOW TO SOLVE THIS ISSUE!
+
+Importing the numpy C-extensions failed. This error can happen for
+many reasons, often due to issues with your setup or how NumPy was
+installed.
+The following compiled module files exist, but seem incompatible
+with with either python 'cpython-314' or the platform 'win32':
+
+  * _multiarray_umath.cp311-win_amd64.lib
+  * _multiarray_umath.cp311-win_amd64.pyd
+
+We have compiled some common reasons and troubleshooting tips at:
+
+    https://numpy.org/devdocs/user/troubleshooting-importerror.html
+
+Please note and check the following:
+
+  * The Python version is: Python 3.14 from "C:\Users\lahar\Downloads\ai-sales-assistant-main\ai-sales-assistant-main\venv\Scripts\python.exe"
+  * The NumPy version is: "2.4.1"
+
+and make sure that they are the versions you expect.
+
+Please carefully study the information and documentation linked above.
+This is unlikely to be a NumPy issue but will be caused by a bad install
+or environment on your machine.
+
+Original error was: No module named 'numpy._core._multiarray_umath'
+). Using SQLite FTS5 fallback.
+INFO:     Started server process [924]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+2026-03-02 22:42:58,362 | INFO | Chat from user=2: 'create a lead for Mike Smith at mike@acme.com company Acme Corp'
+2026-03-02 22:43:00,144 | INFO | HubSpot POST https://api.hubapi.com/crm/v3/objects/contacts \u2192 201
+2026-03-02 22:51:53,732 | INFO | Chat from user=3: 'Create a lead with email john@gmail.com'
+2026-03-02 22:51:56,205 | INFO | HubSpot POST https://api.hubapi.com/crm/v3/objects/contacts \u2192 409
+2026-03-02 22:52:09,424 | INFO | Chat from user=3: 'Add a new lead for maria@gmail.com'
+2026-03-02 22:52:11,757 | INFO | HubSpot POST https://api.hubapi.com/crm/v3/objects/contacts \u2192 409
+2026-03-02 22:52:38,012 | INFO | Chat from user=3: 'Update lead email john@gmail.com to john_new@gmail.com'
+2026-03-02 22:52:39,821 | INFO | HubSpot POST https://api.hubapi.com/crm/v3/objects/contacts/search \u2192 200
+2026-03-02 22:52:41,865 | INFO | HubSpot PATCH https://api.hubapi.com/crm/v3/objects/contacts/403052247768 \u2192 200
+2026-03-02 22:52:59,797 | INFO | Chat from user=3: 'show all leads'
+2026-03-02 23:32:40,656 | ERROR | Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\lahar\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lahar\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-03-02 23:36:33,506 | INFO | Chat from user=3: 'Create a lead for test@example.com name Test User'
+2026-03-02 23:36:35,945 | INFO | HubSpot POST https://api.hubapi.com/crm/v3/objects/contacts \u2192 409

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./aisales.db
+      - SECRET_KEY=${SECRET_KEY:-bcf1b2fdc0014f00be684ecf89eb1bb8}
+      - HUBSPOT_API_KEY=${HUBSPOT_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://localhost:80,http://localhost
+    volumes:
+      - ./aisales.db:/app/aisales.db
+
+  frontend:
+    build:
+      context: ./ai-sales-assistant-frontend
+      args:
+        - REACT_APP_API_URL=http://localhost:8000/api/v1
+    ports:
+      - "80:80"
+      - "3000:80"
+    depends_on:
+      - backend

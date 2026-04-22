@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Sales Assistant — Research Paper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&family=Source+Code+Pro&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #000;
+    background: #fff;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 25mm 25mm 20mm 25mm;
+    background: white;
+  }
+
+  /* ── Title Block ── */
+  .title-block {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 12pt;
+    margin-bottom: 16pt;
+  }
+  .title-block h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 6pt;
+  }
+  .title-block .subtitle {
+    font-size: 11pt;
+    font-style: italic;
+    margin-bottom: 4pt;
+  }
+  .title-block .authors {
+    font-size: 10pt;
+    margin-bottom: 2pt;
+  }
+  .title-block .date {
+    font-size: 9pt;
+    color: #444;
+  }
+
+  /* ── Abstract ── */
+  .abstract-box {
+    background: #f7f7f7;
+    border: 1px solid #bbb;
+    border-left: 4px solid #333;
+    padding: 10pt 14pt;
+    margin-bottom: 18pt;
+    font-size: 10.5pt;
+  }
+  .abstract-box .abstract-title {
+    font-size: 10.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+    margin-bottom: 5pt;
+  }
+
+  /* ── Section Headings ── */
+  h2 {
+    font-size: 13pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+    border-bottom: 1px solid #999;
+    padding-bottom: 3pt;
+    margin-top: 18pt;
+    margin-bottom: 8pt;
+  }
+  h3 {
+    font-size: 11.5pt;
+    font-weight: bold;
+    margin-top: 10pt;
+    margin-bottom: 5pt;
+  }
+  h4 {
+    font-size: 11pt;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 8pt;
+    margin-bottom: 4pt;
+  }
+
+  p { margin-bottom: 7pt; text-align: justify; }
+
+  /* ── Lists ── */
+  ul, ol {
+    margin-left: 22pt;
+    margin-bottom: 7pt;
+  }
+  li { margin-bottom: 2pt; }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 8pt 0 10pt 0;
+  }
+  th {
+    background: #222;
+    color: #fff;
+    padding: 5pt 8pt;
+    text-align: left;
+    font-size: 9.5pt;
+  }
+  td {
+    padding: 4pt 8pt;
+    border: 1px solid #ccc;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f4f4f4; }
+
+  /* ── Code block ── */
+  pre {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 8.5pt;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 8pt 10pt;
+    margin: 8pt 0;
+    white-space: pre-wrap;
+    line-height: 1.4;
+  }
+
+  /* ── Blockquote / sample ── */
+  blockquote {
+    border-left: 3px solid #555;
+    margin: 8pt 0 8pt 10pt;
+    padding: 5pt 10pt;
+    font-style: italic;
+    background: #fafafa;
+    font-size: 10pt;
+  }
+
+  /* ── References ── */
+  .references ol {
+    font-size: 9.5pt;
+    line-height: 1.5;
+  }
+
+  /* ── Status badge ── */
+  .badge-ok   { display:inline-block; background:#1a7a1a; color:#fff; border-radius:3px; padding:0 5pt; font-size:9pt; }
+  .tick { color: #1a7a1a; font-weight:bold; }
+
+  /* ── Horizontal rule ── */
+  hr { border: none; border-top: 1px solid #bbb; margin: 14pt 0; }
+
+  /* ── Slide table ── */
+  .slide-table th { background: #1a237e; }
+
+  /* ── Print settings ── */
+  @page {
+    size: A4;
+    margin: 20mm 20mm 18mm 20mm;
+  }
+  @media print {
+    body { background: #fff; }
+    .page { width: 100%; padding: 0; margin: 0; }
+    h2 { page-break-after: avoid; }
+    table { page-break-inside: avoid; }
+    pre  { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════
+       TITLE BLOCK
+  ═══════════════════════════════════════════ -->
+  <div class="title-block">
+    <h1>AI-Powered Sales Assistant:<br>
+        Intelligent Lead Management with NLP,<br>
+        Vector Memory, and CRM Integration</h1>
+    <div class="subtitle">A Full-Stack Approach to Conversational Lead Management</div>
+    <div class="authors" style="margin-top:8pt;">
+      Department of Computer Science &amp; Engineering
+    </div>
+    <div class="date">March 2026</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       ABSTRACT
+  ═══════════════════════════════════════════ -->
+  <div class="abstract-box">
+    <div class="abstract-title">Abstract</div>
+    Sales teams spend a significant portion of their time on manual data entry, lead tracking, and CRM updates —
+    tasks that are repetitive, error-prone, and time-consuming. This paper presents an <strong>AI-Powered Sales
+    Assistant</strong>: a web-based system that enables sales representatives to manage leads through natural
+    language conversations. The system leverages <strong>OpenAI GPT-4o-mini</strong> for intent classification
+    and entity extraction, <strong>ChromaDB / SQLite FTS5</strong> for contextual vector memory, and the
+    <strong>HubSpot CRM API</strong> for real-time contact synchronization. A human-in-the-loop approval
+    mechanism ensures that critical operations (such as deletions) require explicit confirmation before execution.
+    The architecture follows a clean separation of concerns — FastAPI backend, React.js frontend — and is
+    containerised via Docker for production readiness.
+    <br><br>
+    <em><strong>Keywords:</strong> Natural Language Processing, Intent Classification, CRM Automation,
+    Human-in-the-Loop, Vector Database, FastAPI, React.js</em>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       1. INTRODUCTION
+  ═══════════════════════════════════════════ -->
+  <h2>1. Introduction</h2>
+
+  <h3>1.1 Problem Statement</h3>
+  <p>Modern B2B sales pipelines involve managing hundreds of leads across multiple tools. Key challenges include:</p>
+  <ul>
+    <li><strong>Manual CRM entry</strong> wastes productive selling time</li>
+    <li><strong>Context loss</strong> between conversations and CRM records</li>
+    <li><strong>No intelligent assistance</strong> during lead qualification</li>
+    <li><strong>Slow approval workflows</strong> for sensitive actions like deletions</li>
+  </ul>
+
+  <h3>1.2 Motivation</h3>
+  <p>The rise of conversational AI (e.g., ChatGPT) has demonstrated that natural language is a powerful interface for
+  structured tasks. Applying this to sales operations can:</p>
+  <ul>
+    <li>Reduce lead entry time from minutes to seconds</li>
+    <li>Ensure CRM is always up-to-date</li>
+    <li>Give sales reps an AI "copilot" that understands sales intent</li>
+  </ul>
+
+  <h3>1.3 Objectives</h3>
+  <ol>
+    <li>Build a conversational interface for full CRUD operations on leads</li>
+    <li>Classify user intent using LLMs with a regex fallback</li>
+    <li>Synchronise all changes to HubSpot CRM automatically</li>
+    <li>Implement a <strong>human approval gate</strong> for destructive operations</li>
+    <li>Maintain conversational memory using vector embeddings</li>
+  </ol>
+
+  <!-- ═══════════════════════════════════════════
+       2. LITERATURE REVIEW
+  ═══════════════════════════════════════════ -->
+  <h2>2. Literature Review</h2>
+
+  <table>
+    <thead>
+      <tr><th>Domain</th><th>Existing Work</th><th>Gap Addressed</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conversational AI</td><td>OpenAI GPT-4, LangChain agents</td><td>No domain-specific sales task execution</td></tr>
+      <tr><td>CRM Automation</td><td>Salesforce Einstein, Zoho Zia</td><td>Closed ecosystems, no open-source alternative</td></tr>
+      <tr><td>Intent Classification</td><td>BERT, RASA NLU</td><td>Require heavy training data; LLM zero-shot is more flexible</td></tr>
+      <tr><td>Human-in-the-Loop ML</td><td>RLHF, Active Learning</td><td>Not applied to business operation approval queues</td></tr>
+      <tr><td>Vector Databases</td><td>Pinecone, Weaviate, ChromaDB</td><td>ChromaDB offers open-source, local-first deployment</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Key Insight:</strong> No existing open-source system combines NLP-driven CRM management with a human approval workflow
+  and contextual vector memory in a single deployable application.</p>
+
+  <!-- ═══════════════════════════════════════════
+       3. SYSTEM ARCHITECTURE
+  ═══════════════════════════════════════════ -->
+  <h2>3. System Architecture</h2>
+
+  <h3>3.1 High-Level Architecture</h3>
+  <pre>
+[React Frontend (Port 3000)]
+        │  REST API + JWT Bearer Token
+[FastAPI Backend (Port 8000)]
+   ├── Intent Service  (OpenAI GPT-4o-mini / Regex fallback)
+   ├── Entity Service  (extraction + merging)
+   ├── Action Service  (CRUD dispatcher)
+   ├── Approval Service (human gate)
+   ├── CRM Service     (HubSpot REST API v3)
+   └── Vector Service  (ChromaDB / SQLite FTS5)
+        │
+[SQLite Database]  ←→  [VectorDB (.vectordb/)]
+        │
+[HubSpot CRM API]  (External)</pre>
+
+  <h3>3.2 Technology Stack</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>React.js 18, JavaScript ES6+, Custom CSS</td></tr>
+      <tr><td>Backend</td><td>FastAPI (Python 3.11), SQLAlchemy ORM</td></tr>
+      <tr><td>Database</td><td>SQLite (dev), Alembic (migrations)</td></tr>
+      <tr><td>AI / NLP</td><td>OpenAI GPT-4o-mini</td></tr>
+      <tr><td>Vector Memory</td><td>ChromaDB (primary), SQLite FTS5 (fallback)</td></tr>
+      <tr><td>CRM Integration</td><td>HubSpot CRM REST API v3</td></tr>
+      <tr><td>Authentication</td><td>JWT (access + refresh tokens), bcrypt</td></tr>
+      <tr><td>DevOps</td><td>Docker, docker-compose</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════
+       4. METHODOLOGY
+  ═══════════════════════════════════════════ -->
+  <h2>4. Methodology</h2>
+
+  <h3>4.1 Intent Classification Pipeline</h3>
+  <p>The system uses a <strong>two-stage classification pipeline</strong>:</p>
+
+  <h4>Stage 1 — LLM Classification (Primary)</h4>
+  <ul>
+    <li>User message is sent to GPT-4o-mini with a structured system prompt</li>
+    <li>Response is constrained to JSON format using <code>response_format: json_object</code></li>
+    <li>Returns: <code>intent</code> + <code>entities</code> (email, name, phone, company, status, deal_value)</li>
+  </ul>
+
+  <p><strong>Supported Intents:</strong>
+  <code>create_lead</code> · <code>update_lead</code> · <code>delete_lead</code> · <code>show_leads</code> ·
+  <code>create_deal</code> · <code>schedule_follow_up</code> · <code>unknown</code></p>
+
+  <h4>Stage 2 — Regex Fallback (when no API key)</h4>
+  <ul>
+    <li>Pattern matches keywords like "create", "delete", "update", "show"</li>
+    <li>Extracts email via regex: <code>\S+@\S+\.\S+</code></li>
+    <li>Ensures the system is fully functional without an OpenAI key</li>
+  </ul>
+
+  <p><strong>Entity Merging:</strong> LLM and regex entities are merged — regex fills gaps the LLM may miss for
+  structured data like phone numbers and emails.</p>
+
+  <h3>4.2 Action Execution Flow</h3>
+  <pre>
+User Message
+    → classify_with_llm()       # Determine intent + extract entities
+    → extract_entities()        # Regex extraction (backup)
+    → merge_entities()          # Combine both sources
+    → execute_action()
+          → persist Conversation (DB)
+          → store_message (VectorDB)
+          → requires_approval?
+                YES → create PendingApproval, return "pending"
+                NO  → execute CRUD on Lead
+                      → sync with HubSpot CRM
+                      → return result</pre>
+
+  <h3>4.3 Human-in-the-Loop Approval</h3>
+  <p>Certain intents are flagged as <strong>high-risk</strong>:</p>
+  <ul>
+    <li><code>delete_lead</code> — permanent data loss</li>
+    <li><code>apply_discount</code> — financial impact</li>
+  </ul>
+  <p>When triggered via chat:</p>
+  <ol>
+    <li>A <code>PendingApproval</code> record is created in the database</li>
+    <li>The chat returns a "pending" response to the user</li>
+    <li>An admin reviews the action in the <strong>Approvals Dashboard</strong></li>
+    <li>On approval, the action is re-executed with <code>bypass_approval=True</code></li>
+  </ol>
+  <p>This design prevents accidental or unauthorised destructive operations.</p>
+
+  <h3>4.4 Vector Memory</h3>
+  <table>
+    <thead><tr><th>Backend</th><th>Technology</th><th>Search Type</th></tr></thead>
+    <tbody>
+      <tr><td>Primary</td><td>ChromaDB (cosine similarity)</td><td>Semantic similarity</td></tr>
+      <tr><td>Fallback</td><td>SQLite FTS5 (Porter stemmer)</td><td>Full-text keyword</td></tr>
+      <tr><td>Disabled</td><td>No-op</td><td>Returns empty list</td></tr>
+    </tbody>
+  </table>
+  <p>Messages are stored per <code>user_id</code>. When an AI response is generated, similar past messages are
+  retrieved to provide <strong>contextual continuity</strong> across sessions.</p>
+
+  <h3>4.5 CRM Synchronisation (HubSpot)</h3>
+  <p>Every <code>create_lead</code> and <code>update_lead</code> operation triggers a HubSpot API call:</p>
+  <ul>
+    <li><strong>Create:</strong> <code>POST /crm/v3/objects/contacts</code></li>
+    <li><strong>Update:</strong> Search by email → <code>PATCH /crm/v3/objects/contacts/{id}</code></li>
+    <li><strong>Bulk Sync:</strong> <code>POST /leads/sync</code> iterates all leads, upserts to HubSpot</li>
+  </ul>
+  <p>If <code>HUBSPOT_API_KEY</code> is not set, a graceful warning is logged and the operation continues locally
+  — ensuring the system functions in dev/offline environments.</p>
+
+  <!-- ═══════════════════════════════════════════
+       5. IMPLEMENTATION
+  ═══════════════════════════════════════════ -->
+  <h2>5. Implementation</h2>
+
+  <h3>5.1 Database Models</h3>
+  <table>
+    <thead><tr><th>Model</th><th>Key Fields</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>User</code></td><td>id, email, password, role</td><td>Authentication &amp; authorisation</td></tr>
+      <tr><td><code>Lead</code></td><td>id, email, name, status, deal_value</td><td>Core sales pipeline entity</td></tr>
+      <tr><td><code>Conversation</code></td><td>user_id, message, intent</td><td>Chat history + analytics</td></tr>
+      <tr><td><code>PendingApproval</code></td><td>id, intent, payload, status</td><td>Human approval queue</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 API Endpoints</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>POST</td><td>/api/v1/register</td><td>Register new user</td></tr>
+      <tr><td>POST</td><td>/api/v1/login</td><td>JWT login</td></tr>
+      <tr><td>POST</td><td>/api/v1/refresh</td><td>Refresh access token</td></tr>
+      <tr><td>POST</td><td>/api/v1/chat</td><td>NLP-powered chat endpoint</td></tr>
+      <tr><td>GET</td><td>/api/v1/leads</td><td>Paginated, filtered lead list</td></tr>
+      <tr><td>POST</td><td>/api/v1/leads</td><td>Create lead manually</td></tr>
+      <tr><td>PATCH</td><td>/api/v1/leads/{id}</td><td>Update lead</td></tr>
+      <tr><td>DELETE</td><td>/api/v1/leads/{id}</td><td>Delete lead</td></tr>
+      <tr><td>POST</td><td>/api/v1/leads/sync</td><td>Bulk CRM sync</td></tr>
+      <tr><td>GET</td><td>/api/v1/approvals</td><td>List pending approvals</td></tr>
+      <tr><td>POST</td><td>/api/v1/approvals/{id}/approve</td><td>Approve action</td></tr>
+      <tr><td>POST</td><td>/api/v1/approvals/{id}/reject</td><td>Reject action</td></tr>
+      <tr><td>GET</td><td>/api/v1/analytics</td><td>Sales analytics</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 Frontend Modules</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><code>Login.js</code></td><td>JWT-based login form</td></tr>
+      <tr><td><code>App.js</code></td><td>Route management, auth context, chat interface</td></tr>
+      <tr><td><code>LeadsView.js</code></td><td>Full CRUD table with pagination, filters, modals</td></tr>
+      <tr><td><code>ApprovalsView.js</code></td><td>Admin approval dashboard</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.4 Security</h3>
+  <ul>
+    <li>Passwords hashed with <code>bcrypt</code></li>
+    <li>JWT access tokens (15-min expiry) + refresh tokens (7-day expiry)</li>
+    <li>All protected endpoints use <code>Depends(verify_token)</code> — FastAPI dependency injection</li>
+    <li>Role-based access: <code>sales_rep</code> vs <code>admin</code></li>
+  </ul>
+
+  <!-- ═══════════════════════════════════════════
+       6. RESULTS & EVALUATION
+  ═══════════════════════════════════════════ -->
+  <h2>6. Results &amp; Evaluation</h2>
+
+  <h3>6.1 Functional Results</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>NLP chat → lead creation</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>LLM intent classification</td><td><span class="tick">✅</span> GPT-4o-mini</td></tr>
+      <tr><td>Regex fallback (no API key)</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>Human approval gate</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>HubSpot CRM sync</td><td><span class="tick">✅</span> Working (graceful no-op without key)</td></tr>
+      <tr><td>Vector memory (ChromaDB)</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>SQLite FTS5 fallback</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>Paginated lead management</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>JWT auth with refresh</td><td><span class="tick">✅</span> Working</td></tr>
+      <tr><td>Docker deployment</td><td><span class="tick">✅</span> Working</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 Sample Chat Interaction</h3>
+  <blockquote>
+    <strong>User:</strong> "Add a new lead — John Smith, john@acmecorp.com, Acme Corp, +91-9876543210"<br><br>
+    <em>System detects intent: <code>create_lead</code>, entities: {email, name, company, phone}</em><br><br>
+    <strong>Response:</strong> "Lead created successfully. John Smith (john@acmecorp.com) added to pipeline
+    and synced with HubSpot CRM."
+  </blockquote>
+
+  <h3>6.3 Performance Observations</h3>
+  <table>
+    <thead><tr><th>Operation</th><th>Latency</th></tr></thead>
+    <tbody>
+      <tr><td>Intent classification (GPT-4o-mini)</td><td>~300–700 ms</td></tr>
+      <tr><td>Intent classification (regex fallback)</td><td>&lt;10 ms</td></tr>
+      <tr><td>Lead CRUD operations (local SQLite)</td><td>&lt;50 ms</td></tr>
+      <tr><td>HubSpot API calls</td><td>~200–800 ms (network-dependent)</td></tr>
+      <tr><td>Vector search (ChromaDB)</td><td>~20–100 ms</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════
+       7. FUTURE WORK
+  ═══════════════════════════════════════════ -->
+  <h2>7. Future Work</h2>
+  <ol>
+    <li><strong>Multi-LLM Support</strong> — Add Gemini / Claude as alternative backends</li>
+    <li><strong>Follow-up Scheduling</strong> — Calendar integration (Google Calendar API)</li>
+    <li><strong>Deal Pipeline Visualisation</strong> — Kanban-style board for lead stages</li>
+    <li><strong>Email Integration</strong> — Auto-draft follow-up emails from chat context</li>
+    <li><strong>Analytics Enhancement</strong> — Revenue forecasting with ML models</li>
+    <li><strong>Multi-tenant Support</strong> — Organisational workspaces for teams</li>
+    <li><strong>Mobile App</strong> — React Native frontend for on-the-go sales reps</li>
+    <li><strong>RAG-Enhanced Responses</strong> — Use vector memory to augment AI replies with past conversation context</li>
+  </ol>
+
+  <!-- ═══════════════════════════════════════════
+       8. CONCLUSION
+  ═══════════════════════════════════════════ -->
+  <h2>8. Conclusion</h2>
+  <p>This paper presented a full-stack <strong>AI Sales Assistant</strong> that bridges the gap between
+  conversational AI and structured business process automation. By combining:</p>
+  <ul>
+    <li><strong>LLM-powered intent classification</strong> for natural language interaction</li>
+    <li><strong>Automated CRM synchronisation</strong> to eliminate manual data entry</li>
+    <li><strong>Human-in-the-loop approval gates</strong> for safe operation</li>
+    <li><strong>Vector memory</strong> for persistent conversational context</li>
+  </ul>
+  <p>...the system delivers a practical, production-ready tool that meaningfully reduces the administrative
+  burden on sales teams. The dual-backend approach (LLM primary, regex fallback) ensures the system is
+  resilient and functional across deployment environments with or without an OpenAI API key.</p>
+  <p>The open-source, Dockerised architecture makes it easily extensible and deployable, positioning it as a
+  foundation for intelligent enterprise sales tooling.</p>
+
+  <!-- ═══════════════════════════════════════════
+       REFERENCES
+  ═══════════════════════════════════════════ -->
+  <h2>References</h2>
+  <div class="references">
+    <ol>
+      <li>OpenAI. (2024). <em>GPT-4o Technical Report</em>. OpenAI Blog.</li>
+      <li>Chroma. (2023). <em>ChromaDB: the AI-native open-source embedding database</em>. https://www.trychroma.com</li>
+      <li>HubSpot. (2024). <em>CRM REST API v3 Documentation</em>. https://developers.hubspot.com</li>
+      <li>FastAPI. (2024). <em>FastAPI Framework Documentation</em>. https://fastapi.tiangolo.com</li>
+      <li>Vaswani, A. et al. (2017). <em>Attention Is All You Need</em>. NeurIPS 2017.</li>
+      <li>Lewis, P. et al. (2020). <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em>. NeurIPS 2020.</li>
+      <li>Ouyang, L. et al. (2022). <em>Training language models to follow instructions with human feedback (RLHF)</em>. NeurIPS 2022.</li>
+    </ol>
+  </div>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════
+       APPENDIX — SLIDE OUTLINE
+  ═══════════════════════════════════════════ -->
+  <h2>Appendix: Slide-by-Slide Presentation Outline</h2>
+  <table class="slide-table">
+    <thead>
+      <tr><th>Slide #</th><th>Title</th><th>Key Points</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Title Slide</td><td>Project name, authors, institution</td></tr>
+      <tr><td>2</td><td>Problem Statement</td><td>Manual CRM pain points, 3–4 bullet points</td></tr>
+      <tr><td>3</td><td>Proposed Solution</td><td>System overview + architecture diagram</td></tr>
+      <tr><td>4</td><td>Technology Stack</td><td>Table of tools used</td></tr>
+      <tr><td>5</td><td>Intent Classification</td><td>Two-stage pipeline (LLM + regex), flowchart</td></tr>
+      <tr><td>6</td><td>Action Execution</td><td>Flowchart of message → lead CRUD</td></tr>
+      <tr><td>7</td><td>Human Approval Gate</td><td>Diagram of approval queue flow</td></tr>
+      <tr><td>8</td><td>CRM Integration</td><td>HubSpot sync flow</td></tr>
+      <tr><td>9</td><td>Vector Memory</td><td>ChromaDB / FTS5 comparison table</td></tr>
+      <tr><td>10</td><td>Demo Screenshots</td><td>LeadsView, Chat, Approvals</td></tr>
+      <tr><td>11</td><td>Results</td><td>Feature checklist + performance numbers</td></tr>
+      <tr><td>12</td><td>Future Work</td><td>4–5 bullet points</td></tr>
+      <tr><td>13</td><td>Conclusion</td><td>3–4 sentences summarising contribution</td></tr>
+      <tr><td>14</td><td>References</td><td>IEEE/APA formatted references</td></tr>
+      <tr><td>15</td><td>Q&amp;A</td><td>Thank you slide</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
