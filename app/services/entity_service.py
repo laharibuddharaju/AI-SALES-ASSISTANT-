@@ -29,13 +29,26 @@ def extract_entities(text: str) -> dict:
     status_match = re.search(r"\b(new|contacted|qualified|closed|lost)\b", text, re.IGNORECASE)
     status = status_match.group(1).lower() if status_match else None
 
+    # Product Code
+    pc_match = re.search(r"product code\s+([a-zA-Z0-9\-]+)", text, re.IGNORECASE)
+    product_code = pc_match.group(1).strip() if pc_match else None
+
+    # Name 
+    name_match = re.search(r"name\s+([A-Za-z\s]+?)(?:,| and|\bcompany\b|\bproduct\b|$)", text, re.IGNORECASE)
+    name = name_match.group(1).strip() if name_match else None
+
+    # Company
+    company_match = re.search(r"company\s+([A-Za-z\s]+?)(?:,| and|\bproduct\b|\bname\b|$)", text, re.IGNORECASE)
+    company = company_match.group(1).strip() if company_match else None
+
     return {
         "email": email,
         "phone": phone,
         "deal_value": deal_value,
         "status": status,
-        "name": None,     # Best extracted by LLM; regex for names is unreliable
-        "company": None,  # Same — let LLM handle this
+        "name": name,
+        "company": company,
+        "product_code": product_code,
     }
 
 

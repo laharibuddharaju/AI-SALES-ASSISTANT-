@@ -93,6 +93,7 @@ def _create_lead(db: Session, entities: dict, user_id: str) -> dict:
         name=entities.get("name") or "",
         phone=entities.get("phone") or "",
         company=entities.get("company") or "",
+        product_code=entities.get("product_code") or "",
     )
 
     if existing:
@@ -107,6 +108,7 @@ def _create_lead(db: Session, entities: dict, user_id: str) -> dict:
         name=entities.get("name"),
         phone=entities.get("phone"),
         company=entities.get("company"),
+        product_code=entities.get("product_code"),
         source="chat",
         status=entities.get("status") or "new",
         assigned_to=user_id,
@@ -139,6 +141,8 @@ def _update_lead(db: Session, entities: dict) -> dict:
         lead.company = entities["company"]
     if entities.get("status"):
         lead.status = entities["status"]
+    if entities.get("product_code"):
+        lead.product_code = entities["product_code"]
     if entities.get("deal_value"):
         try:
             lead.deal_value = float(str(entities["deal_value"]).replace(",", "").replace("$", "").strip())
@@ -153,6 +157,7 @@ def _update_lead(db: Session, entities: dict) -> dict:
         name=lead.name or "",
         phone=lead.phone or "",
         company=lead.company or "",
+        product_code=lead.product_code or "",
     )
 
     return {
@@ -197,6 +202,7 @@ def _show_leads(db: Session, entities: dict, user_id: str) -> dict:
                 "email": l.email,
                 "name": l.name,
                 "company": l.company,
+                "product_code": l.product_code,
                 "status": l.status,
                 "phone": l.phone,
             }

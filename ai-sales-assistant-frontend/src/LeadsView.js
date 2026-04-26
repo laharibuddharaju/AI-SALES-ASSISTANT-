@@ -37,7 +37,7 @@ export default function LeadsView() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [editingLead, setEditingLead] = useState(null);
     const [deletingId, setDeletingId] = useState(null);
-    const [formData, setFormData] = useState({ email: "", name: "", company: "", phone: "", status: "new", deal_value: 0 });
+    const [formData, setFormData] = useState({ email: "", name: "", company: "", phone: "", status: "new", deal_value: 0, product_code: "" });
     const [submitting, setSubmitting] = useState(false);
     const [syncing, setSyncing] = useState(false);
 
@@ -65,10 +65,10 @@ export default function LeadsView() {
 
     const handleExport = () => {
         if (!leads.length) return;
-        const headers = ["Email", "Name", "Company", "Phone", "Status", "Deal Value", "Source", "Created"];
+        const headers = ["Email", "Name", "Company", "Phone", "Product Code", "Status", "Deal Value", "Source", "Created"];
         const rows = leads.map(l => [
-            l.email, l.name || "", l.company || "", l.phone || "", l.status,
-            l.deal_value || 0, l.source, l.created_at,
+            l.email, l.name || "", l.company || "", l.phone || "",
+            l.product_code || "", l.status, l.deal_value || 0, l.source, l.created_at,
         ]);
         const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(",")).join("\n");
         const blob = new Blob([csv], { type: "text/csv" });
@@ -91,7 +91,7 @@ export default function LeadsView() {
 
     const openAddModal = () => {
         setEditingLead(null);
-        setFormData({ email: "", name: "", company: "", phone: "", status: "new", deal_value: 0 });
+        setFormData({ email: "", name: "", company: "", phone: "", status: "new", deal_value: 0, product_code: "" });
         setShowModal(true);
     };
 
@@ -103,7 +103,8 @@ export default function LeadsView() {
             company: lead.company || "",
             phone: lead.phone || "",
             status: lead.status || "new",
-            deal_value: lead.deal_value || 0
+            deal_value: lead.deal_value || 0,
+            product_code: lead.product_code || "",
         });
         setShowModal(true);
     };
@@ -165,7 +166,7 @@ export default function LeadsView() {
                     <input
                         id="leads-search"
                         className="leads-search"
-                        placeholder="Search email, name, company…"
+                        placeholder="Search email, name, company, product code…"
                         value={searchInput}
                         onChange={e => setSearchInput(e.target.value)}
                         onKeyDown={handleSearch}
@@ -205,6 +206,7 @@ export default function LeadsView() {
                                 <th>Email</th>
                                 <th>Name / Phone</th>
                                 <th>Company</th>
+                                <th>Product Code</th>
                                 <th>Status</th>
                                 <th>Value</th>
                                 <th>Created</th>
@@ -220,6 +222,11 @@ export default function LeadsView() {
                                         <div className="muted" style={{ fontSize: "11px" }}>{l.phone}</div>
                                     </td>
                                     <td>{l.company || <span className="muted">—</span>}</td>
+                                    <td>
+                                        {l.product_code
+                                            ? <span style={{ fontFamily: "monospace", fontSize: "12px", background: "#1e2a3a", color: "#7dd3fc", padding: "2px 8px", borderRadius: 4 }}>{l.product_code}</span>
+                                            : <span className="muted">—</span>}
+                                    </td>
                                     <td><StatusBadge status={l.status} /></td>
                                     <td style={{ fontWeight: 600 }}>
                                         {l.deal_value ? `$${Number(l.deal_value).toLocaleString()}` : "$0"}
@@ -319,6 +326,21 @@ export default function LeadsView() {
                                         type="text"
                                         value={formData.phone}
                                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Product Code</label>
+                                    <input
+                                        type="text"
+                                        maxLength={20}
+                                        placeholder="Enter product code"
+                                        value={formData.product_code}
+                                        pattern="[A-Za-z0-9]*"
+                                        title="Alphanumeric only, max 20 characters"
+                                        onChange={e => {
+                                            const val = e.target.value.replace(/[^A-Za-z0-9]/g, "");
+                                            setFormData({ ...formData, product_code: val });
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group">
