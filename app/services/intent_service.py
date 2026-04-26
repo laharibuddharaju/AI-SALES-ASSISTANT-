@@ -32,7 +32,8 @@ Respond ONLY with valid JSON in this format:
     "phone": "<phone or null>",
     "company": "<company name or null>",
     "status": "<lead status or null>",
-    "deal_value": "<numeric value or null>"
+    "deal_value": "<numeric value or null>",
+    "product_code": "<product code or null>"
   }
 }
 """.strip()
@@ -88,4 +89,4 @@ def _regex_classify(message: str) -> dict:
     else:
         intent = "unknown"
 
-    return {"intent": intent, "entities": {"email": email, "name": None, "phone": None, "company": None, "status": None, "deal_value": None}}
+    return {"intent": intent, "entities": {"email": email, "name": None, "phone": None, "company": None, "status": None, "deal_value": None, "product_code": None}}

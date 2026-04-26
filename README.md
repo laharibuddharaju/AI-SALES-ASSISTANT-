@@ -54,8 +54,8 @@ ai-sales-assistant/
 
 ```powershell
 git clone <repository-url>
-cd ai-sales-assistant
 
+cd ai-sales-assistant-main
 python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt

@@ -19,7 +19,13 @@ def _headers() -> dict:
     }
 
 
-def _build_properties(email: str, name: str = "", phone: str = "", company: str = "") -> dict:
+def _build_properties(
+    email: str,
+    name: str = "",
+    phone: str = "",
+    company: str = "",
+    product_code: str = "",
+) -> dict:
     """Build HubSpot contact property payload."""
     first, *rest = (name.strip().split(" ") if name else ["", ""])
     props = {"email": email}
@@ -31,6 +37,8 @@ def _build_properties(email: str, name: str = "", phone: str = "", company: str 
         props["phone"] = phone
     if company:
         props["company"] = company
+    if product_code:
+        props["product_code"] = product_code  # custom HubSpot property
     return {"properties": props}
 
 
@@ -58,13 +66,25 @@ def _safe_call(method: str, url: str, **kwargs) -> dict:
         return {"status_code": 500, "data": {"error": str(exc)}}
 
 
-def create_crm_contact(email: str, name: str = "", phone: str = "", company: str = "") -> dict:
+def create_crm_contact(
+    email: str,
+    name: str = "",
+    phone: str = "",
+    company: str = "",
+    product_code: str = "",
+) -> dict:
     """Create a new contact in HubSpot. Returns 409 if contact already exists."""
-    payload = _build_properties(email, name, phone, company)
+    payload = _build_properties(email, name, phone, company, product_code)
     return _safe_call("post", HUBSPOT_BASE, json=payload)
 
 
-def update_crm_contact(email: str, name: str = "", phone: str = "", company: str = "") -> dict:
+def update_crm_contact(
+    email: str,
+    name: str = "",
+    phone: str = "",
+    company: str = "",
+    product_code: str = "",
+) -> dict:
     """
     Update an existing HubSpot contact by email.
     HubSpot requires fetching the contact ID first, then PATCHing it.
@@ -86,5 +106,5 @@ def update_crm_contact(email: str, name: str = "", phone: str = "", company: str
 
     # Step 2: PATCH the contact
     patch_url = f"{HUBSPOT_BASE}/{contact_id}"
-    payload = _build_properties(email, name, phone, company)
+    payload = _build_properties(email, name, phone, company, product_code)
     return _safe_call("patch", patch_url, json=payload)

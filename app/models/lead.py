@@ -11,6 +11,7 @@ class Lead(Base):
     name         = Column(String, nullable=True)
     phone        = Column(String, nullable=True)
     company      = Column(String, nullable=True)
+    product_code = Column(String(20), nullable=True)    # alphanumeric, max 20 chars
     source       = Column(String, default="chat")       # "chat" | "api" | "import"
     status       = Column(String, default="new")        # "new" | "contacted" | "qualified" | "closed"
     deal_value   = Column(Float, nullable=True)
