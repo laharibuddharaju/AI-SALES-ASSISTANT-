@@ -103,7 +103,7 @@ export default function App() {
       const res = await sendMessage(text);
       const reply = res?.result?.message || res?.result?.leads
         ? formatLeadsReply(res.result)
-        : (res?.error || "Done.");
+        : (res?.result?.error || res?.error || "Done.");
       setMessages(m => [...m, { role: "assistant", content: reply, intent: res?.intent, time: now() }]);
     } catch (err) {
       setMessages(m => [...m, { role: "assistant", content: `❌ ${err.message}`, time: now() }]);

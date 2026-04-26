@@ -76,7 +76,7 @@ def _regex_classify(message: str) -> dict:
     """Simple regex-based fallback classifier."""
     msg = message.lower()
     email_match = re.findall(r"\S+@\S+\.\S+", message)
-    email = email_match[0] if email_match else None
+    email = email_match[0].rstrip(",.;:") if email_match else None
 
     if re.search(r"\b(create|add|register|save|new)\b", msg) and email:
         intent = "create_lead"

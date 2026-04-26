@@ -15,7 +15,7 @@ def extract_entities(text: str) -> dict:
     """
     # Email
     email_match = re.findall(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", text)
-    email = email_match[0] if email_match else None
+    email = email_match[0].rstrip(",.;:") if email_match else None
 
     # Phone (international and local formats)
     phone_match = re.findall(r"(?:\+?\d[\d\s\-().]{7,}\d)", text)
